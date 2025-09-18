@@ -136,7 +136,7 @@ export default function MainScreen({ navigation }: any) {
     return (
       <TouchableOpacity
         style={styles.cardWrapper}
-        onPress={() => navigation.navigate("ItemDetail", { item })}
+        onPress={() => navigation.navigate("ItemDetail", { item, user })}
       >
         <View style={styles.card}>
           <Image source={{ uri: imageUrl }} style={styles.cardImage} />

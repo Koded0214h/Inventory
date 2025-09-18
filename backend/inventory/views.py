@@ -1,7 +1,8 @@
+# views.py
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Category, Unit, Item, ItemImage
-from .serializers import CategorySerializer, UnitSerializer, ItemSerializer, ItemImageSerializer
+from .models import Category, Unit, Item
+from .serializers import CategorySerializer, UnitSerializer, ItemSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -19,10 +20,4 @@ class UnitViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = [IsAuthenticated]
-
-
-class ItemImageViewSet(viewsets.ModelViewSet):
-    queryset = ItemImage.objects.all()
-    serializer_class = ItemImageSerializer
     permission_classes = [IsAuthenticated]

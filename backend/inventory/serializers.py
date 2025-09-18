@@ -1,5 +1,6 @@
+# serializers.py
 from rest_framework import serializers
-from .models import Category, Unit, Item, ItemImage
+from .models import Category, Unit, Item
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -14,25 +15,19 @@ class UnitSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "symbol"]
 
 
-class ItemImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ItemImage
-        fields = ["id", "image", "is_primary", "uploaded_at"]
-
-
 class ItemSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     category_id = serializers.UUIDField(write_only=True, required=False)
     unit = UnitSerializer(read_only=True)
     unit_id = serializers.UUIDField(write_only=True, required=False)
-    images = ItemImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Item
         fields = [
-            "id", "name", "description",
-            "quantity", "category", "category_id",
-            "unit", "unit_id", "images", "created_at"
+            "id", "name", "description", "quantity",
+            "category", "category_id",
+            "unit", "unit_id",
+            "image", "created_at"
         ]
 
     def create(self, validated_data):

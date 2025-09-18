@@ -1,3 +1,4 @@
+// screens/AddItem.tsx
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -41,11 +42,14 @@ export default function AddItem({ navigation }: any) {
         axios.get(`${API_BASE}/api/categories/`, { headers: { Authorization: `Bearer ${token}` } }),
         axios.get(`${API_BASE}/api/units/`, { headers: { Authorization: `Bearer ${token}` } }),
       ]);
-      setCategories(catRes.data);
-      setUnits(unitRes.data);
+
+      setCategories(Array.isArray(catRes.data) ? catRes.data : catRes.data.results || []);
+      setUnits(Array.isArray(unitRes.data) ? unitRes.data : unitRes.data.results || []);
     } catch (err) {
       console.error(err);
       Alert.alert("Error", "Failed to fetch categories/units");
+      setCategories([]);
+      setUnits([]);
     }
   };
 
@@ -104,9 +108,11 @@ export default function AddItem({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 16 }}>
+        {/* Name */}
         <Text style={styles.label}>Name *</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Item name" />
 
+        {/* Description */}
         <Text style={styles.label}>Description</Text>
         <TextInput
           style={[styles.input, { height: 80 }]}
@@ -116,6 +122,7 @@ export default function AddItem({ navigation }: any) {
           multiline
         />
 
+        {/* Quantity */}
         <Text style={styles.label}>Quantity *</Text>
         <TextInput
           style={styles.input}
@@ -124,26 +131,39 @@ export default function AddItem({ navigation }: any) {
           keyboardType="numeric"
         />
 
+        {/* Category */}
         <Text style={styles.label}>Category *</Text>
         <View style={styles.pickerContainer}>
-          <Picker selectedValue={category} onValueChange={(val) => setCategory(val)}>
+          <Picker
+            selectedValue={category}
+            onValueChange={(val) => setCategory(val)}
+          >
             <Picker.Item label="Select Category" value="" />
-            {categories.map((cat) => (
-              <Picker.Item key={cat.id} label={cat.name} value={cat.id} />
-            ))}
+            {categories.length > 0
+              ? categories.map((cat) => (
+                  <Picker.Item key={cat.id} label={cat.name} value={cat.id} />
+                ))
+              : null}
           </Picker>
         </View>
 
+        {/* Unit */}
         <Text style={styles.label}>Unit *</Text>
         <View style={styles.pickerContainer}>
-          <Picker selectedValue={unit} onValueChange={(val) => setUnit(val)}>
+          <Picker
+            selectedValue={unit}
+            onValueChange={(val) => setUnit(val)}
+          >
             <Picker.Item label="Select Unit" value="" />
-            {units.map((u) => (
-              <Picker.Item key={u.id} label={u.symbol} value={u.id} />
-            ))}
+            {units.length > 0
+              ? units.map((u) => (
+                  <Picker.Item key={u.id} label={u.symbol} value={u.id} />
+                ))
+              : null}
           </Picker>
         </View>
 
+        {/* Image */}
         <Text style={styles.label}>Image</Text>
         <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
           {image ? (
@@ -153,7 +173,12 @@ export default function AddItem({ navigation }: any) {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={loading}>
+        {/* Submit Button */}
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={handleSubmit}
+          disabled={loading}
+        >
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
@@ -180,6 +205,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,
+    marginBottom: 8,
   },
   imagePicker: {
     height: 150,

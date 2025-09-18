@@ -130,29 +130,33 @@ export default function MainScreen({ navigation }: any) {
         ? item.image
         : `${API_BASE}${item.image}`
       : "https://via.placeholder.com/150";
-
+  
     const quantity = quantities[item.id] ?? Number(item.quantity);
-
+  
     return (
-      <View style={styles.card}>
-        <Image source={{ uri: imageUrl }} style={styles.cardImage} />
-        <Text style={styles.cardTitle} numberOfLines={1}>
-          {item.name}
-        </Text>
-
-        {/* Full-width Jumia-style quantity selector */}
-        <View style={styles.quantityContainer}>
-          <TouchableOpacity style={styles.qtyButton} onPress={() => decreaseQuantity(item.id)}>
-            <Text style={styles.qtyText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.qtyNumber}>{quantity}</Text>
-          <TouchableOpacity style={styles.qtyButton} onPress={() => increaseQuantity(item.id)}>
-            <Text style={styles.qtyText}>+</Text>
-          </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.cardWrapper}
+        onPress={() => navigation.navigate("ItemDetail", { item })}
+      >
+        <View style={styles.card}>
+          <Image source={{ uri: imageUrl }} style={styles.cardImage} />
+          <Text style={styles.cardTitle} numberOfLines={1}>
+            {item.name}
+          </Text>
+          <View style={styles.quantityContainer}>
+            <TouchableOpacity style={styles.qtyButton} onPress={() => decreaseQuantity(item.id)}>
+              <Text style={styles.qtyText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.qtyNumber}>{quantity}</Text>
+            <TouchableOpacity style={styles.qtyButton} onPress={() => increaseQuantity(item.id)}>
+              <Text style={styles.qtyText}>+</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
+  
 
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 100],
@@ -179,19 +183,31 @@ export default function MainScreen({ navigation }: any) {
       {/* HEADER */}
       <Animated.View style={[styles.header, { height: headerHeight }]}>
         <Animated.Text style={[styles.greeting, { fontSize: titleSize }]}>
-          Hi {user?.name || "Guest"}
+            Hi {user?.name || "Guest"}
         </Animated.Text>
 
         <View style={styles.rightIcons}>
-          <TouchableOpacity style={styles.iconButton} onPress={() => navigation.navigate("Settings" as never)}>
-            <Ionicons name="settings-outline" size={22} color={ACCENT} />
-          </TouchableOpacity>
+            {/* Add item button */}
+            <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate("AddItem" as never)}
+            >
+            <Ionicons name="add-circle-outline" size={24} color={ACCENT} />
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.profileCircle} onPress={handleProfilePress}>
+            <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => navigation.navigate("Settings" as never)}
+            >
+            <Ionicons name="settings-outline" size={22} color={ACCENT} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.profileCircle} onPress={handleProfilePress}>
             <Ionicons name="person" size={18} color={ACCENT} />
-          </TouchableOpacity>
+            </TouchableOpacity>
         </View>
       </Animated.View>
+
 
       {/* INVENTORY GRID */}
       <Animated.FlatList
@@ -252,6 +268,7 @@ const styles = StyleSheet.create({
   },
   cardImage: { width: "100%", height: 120, borderRadius: 10, marginBottom: 8 },
   cardTitle: { fontSize: 16, fontWeight: "600", marginBottom: 8, color: "#333" },
+  cardWrapper: { flex: 1, marginHorizontal: 5, marginVertical: 8 },
 
   // Quantity Selector
   quantityContainer: {

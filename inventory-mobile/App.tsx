@@ -7,6 +7,8 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import DummyScreen from "./screens/DummyScreen";
 import MainScreen from "./screens/MainScreen";
+import ItemDetail from "./screens/ItemDetail";
+import AddItem from "./screens/AddItem";
 
 import type { RootStackParamList } from "./types/navigation";
 
@@ -21,6 +23,8 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Dummy" component={DummyScreen} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen name="ItemDetail" component={ItemDetail} />
+        <Stack.Screen name="AddItem" component={AddItem} />
       </Stack.Navigator>
     </NavigationContainer>
   );

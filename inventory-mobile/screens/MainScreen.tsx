@@ -25,7 +25,7 @@ export default function MainScreen({ navigation }: any) {
   const [user, setUser] = useState<any>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  const API_BASE = "http://192.168.0.4:8000";
+  const API_BASE = "http://172.20.10.2:8000";
 
   const fetchUser = async (token: string) => {
     const res = await axios.get(`${API_BASE}/api/user/`, {

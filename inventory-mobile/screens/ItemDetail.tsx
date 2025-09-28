@@ -15,7 +15,7 @@ import { getAccessToken } from "../utils/storage";
 import axios from "axios";
 
 const ACCENT = "#bd8bc2";
-const API_BASE = "http://192.168.0.4:8000";
+const API_BASE = "http://172.20.10.2:8000";
 
 export default function ItemDetail({ route, navigation }: any) {
   const { item, user } = route.params; // get logged-in user

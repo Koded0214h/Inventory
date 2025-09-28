@@ -43,3 +43,22 @@ class LogoutView(APIView):
             return Response({"message": "Logout successful"}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
+
+class ProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+class SettingsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Placeholder for user settings
+        settings = {
+            "theme": "light",
+            "notifications": True,
+            "language": "en"
+        }
+        return Response(settings)

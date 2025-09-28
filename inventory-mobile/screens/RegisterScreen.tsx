@@ -13,7 +13,7 @@ import axios from "axios";
 import { saveSession } from "../utils/storage";
 
 const ACCENT = "#bd8bc2";
-const API_BASE_URL = "http://192.168.0.4:8000/api";
+const API_BASE_URL = "http://172.20.10.2:8000/api";
 
 export default function RegisterScreen({ navigation }: any) {
   const [email, setEmail] = useState("");

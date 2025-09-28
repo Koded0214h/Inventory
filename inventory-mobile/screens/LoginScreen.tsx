@@ -17,7 +17,7 @@ import { saveSession } from "../utils/storage";
 
 const ACCENT = "#bd8bc2";
 const PLACEHOLDER = "#9CA3AF";
-const API_BASE_URL = "http://192.168.0.4:8000/api";
+const API_BASE_URL = "http://172.20.10.2:8000/api";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");

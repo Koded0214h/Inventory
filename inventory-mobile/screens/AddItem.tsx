@@ -18,7 +18,7 @@ import { Picker } from "@react-native-picker/picker";
 import { getAccessToken } from "../utils/storage";
 
 const ACCENT = "#bd8bc2";
-const API_BASE = "http://192.168.0.4:8000";
+const API_BASE = "http://172.20.10.2:8000";
 
 export default function AddItem({ navigation }: any) {
   const [name, setName] = useState("");
